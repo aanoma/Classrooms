@@ -22,7 +22,7 @@ Classrooms website Consists of three pages
  * Javascript
    * Vuejs
 
-## All right reserved to
+## License
 
 This project is done by [**aanoma**](https://github.com/aanoma)  - CodeLab0011 :trollface:
 
