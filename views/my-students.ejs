@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>My Students</title>
+    <style>
+        nav{
+            background-color: transparent;
+        }
+        body{
+            font: message-box;
+            background: linear-gradient(to bottom right,#c7e0d8 ,#efddb1,#86e0c3, #0d4c59);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+        .shadow{
+            text-shadow: 1px 1px #0b2042;
+
+        }
+        .shadow-text{
+            text-shadow: -1px 0 #d5edef, 0 1px #d5edef, 1px 0 #d5edef, 0 -1px #d5edef;
+
+
+        }
+
+        p {
+            word-wrap: break-word;
+        }
+        div.card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        footer{
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: rgba(0,128,128,0.2);
+
+        }
+
+
+
+        .center-cropped {
+            width: 17rem;
+            height: 17rem;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+
+
+        .img-container {
+            position: relative;
+            width: 100%;
+        }
+
+
+        .img-container .btn {
+            position: absolute;
+            top: 0%;
+            left: 0%;
+        }
+
+
+
+    </style>
+</head>
+<body class="h-100 bg-light">
+
+<div class="container h-100 " id="root">
+<!--navbar-->
+    <nav class="navbar navbar-expand-lg navbar-light w-100 mb-4">
+        <a class="navbar-brand text-info shadow-text display-2" href="/">ClassRooms!</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+            </ul>
+            <div class="form-inline my-2 my-lg-0">
+                <!-- sort by -->
+                <button @click="openAddModal" class="btn btn-info mr-2 my-sm-0">+</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Stage
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" @click="searchStage('First Stage')" href="#">First Stage</a>
+                        <a class="dropdown-item" @click="searchStage('Second Stage')" >Second Stage</a>
+                        <a class="dropdown-item" @click="searchStage('Third Stage')" >Third Stage</a>
+                        <a class="dropdown-item" @click="searchStage('Fourth Stage')" >Fourth Stage</a>
+                        <a class="dropdown-item" @click="showAllFun" >Show All</a>
+                    </div>
+                </div>
+                <!------------------->
+
+
+                <!--account-->
+                <input class="form-control ml-2 mr-2" placeholder="Search by name" @keyup.enter="searchStudent(students)" v-model="searchInput">
+                <button class="btn btn-info my-2 my-sm-0" @click="searchStudent(students)">Search</button>
+
+                <!------------------->
+
+
+
+
+            </div>
+        </div>
+    </nav>
+    <!-------------->
+
+    <!-- Add Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Inputs -->
+                    <label for="basic-url">Student Name</label>
+                    <input type="text" v-model="addingStudent.name" class="form-control">
+
+                    <label for="basic-url" class="mt-2">Student Photo</label>
+                    <input type="text"  v-model="addingStudent.image" class="form-control">
+                    <label for="basic-url"  class="mt-2">Birthday</label>
+                    <div class="form-row">
+                        <div class="col-2">
+                            <input type="text"  v-model="addingStudent.birthday.day" class="form-control" placeholder="D.">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" v-model="addingStudent.birthday.month" class="form-control" placeholder="M.">
+                        </div>
+                        <div class="col-8">
+                            <input type="text" v-model="addingStudent.birthday.year" class="form-control" placeholder="Year">
+                        </div>
+                    </div>
+
+                    <label for="basic-url"  class="mt-2">Student Department</label>
+                    <input type="text"  v-model="addingStudent.department" class="form-control">
+
+                    <label for="basic-url"  class="mt-2">Stage</label>
+                    <input type="text"  v-model="addingStudent.stage" class="form-control">
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="addStudent">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--Table Modal-->
+    <div class="modal fade bd-example-modal-lg" id="tableModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">{{tableStudent.name}}'s Scores</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover table-responsive text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Subject one</th>
+                            <th scope="col">Subject Two</th>
+                            <th scope="col">Subject Three</th>
+                            <th scope="col">Subject Four</th>
+                            <th scope="col">Subject Five</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">{{tableStudent.name}}</th>
+                            <td v-if="!(editInput)">{{tableStudent.score1}}</td>
+                            <td v-if="!(editInput)">{{tableStudent.score2}}</td>
+                            <td v-if="!(editInput)">{{tableStudent.score3}}</td>
+                            <td v-if="!(editInput)">{{tableStudent.score4}}</td>
+                            <td v-if="!(editInput)">{{tableStudent.score5}}</td>
+                            <td v-if="(editInput)">
+                                <div class="col-xs-2">
+                                    <input class="form-control" v-model="tableStudent.score1" type="text">
+                                </div>
+                            </td>
+                            <td v-if="(editInput)">
+                                <div class="col-xs-2">
+                                    <input class="form-control" v-model="tableStudent.score2"  type="text">
+                                </div>
+                            </td>
+                            <td v-if="(editInput)">
+                                <div class="col-xs-2">
+                                    <input class="form-control" v-model="tableStudent.score3"  type="text">
+                                </div>
+                            </td>
+                            <td v-if="(editInput)">
+                                <div class="col-xs-2">
+                                    <input class="form-control" v-model="tableStudent.score4"  type="text">
+                                </div>
+                            </td>
+                            <td v-if="(editInput)">
+                                <div class="col-xs-2">
+                                    <input class="form-control"v-model="tableStudent.score5"  type="text">
+                                </div>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" v-if="!(editInput)" @click="showInput">Edit</button>
+                    <button type="button" class="btn btn-primary" v-if="editInput" @click="editScores">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--->
+    <!-- Editing Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Student</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- Inputs -->
+                    <label for="basic-url">Student Name</label>
+                        <input type="text" v-model="editingStudent.name" class="form-control">
+
+                    <label for="basic-url" class="mt-2">Student Photo</label>
+                    <input type="text"  v-model="editingStudent.image" class="form-control">
+                    <label for="basic-url" class="mt-2">Birthday</label>
+                    <div class="form-row">
+                        <div class="col-2">
+                            <input type="text"  v-model="editingStudent.birthday.day" class="form-control" placeholder="D.">
+                        </div>
+                        <div class="col-2">
+                            <input type="text" v-model="editingStudent.birthday.month" class="form-control" placeholder="M.">
+                        </div>
+                        <div class="col-8">
+                            <input type="text" v-model="editingStudent.birthday.year" class="form-control" placeholder="Year">
+                        </div>
+                    </div>
+
+                    <label for="basic-url" class="mt-2">Student Department</label>
+                        <input type="text"  v-model="editingStudent.department" class="form-control">
+
+                    <label for="basic-url" class="mt-2">Stage</label>
+                    <input type="text"  v-model="editingStudent.stage" class="form-control">
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="editStudent">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row h-100">
+        <div class="col-12 h-100">
+            <div class="row justify-content-center mb-5">
+
+            <!--Cards-->
+
+                <div class="card ml-2 mt-2 bg-info text-white " v-if="showSearch" v-for="student in searchArray">
+                    <div class="img-container">
+                        <img class="card-img-top center-cropped" :src="student.image" alt="Card image cap">
+                        <button @click="removeStudent(student._id)" class="btn btn-link text-light">X</button>
+
+                    </div>
+                    <div class="card-body p-0 my-1 mx-auto" >
+
+                        <h5 class="card-title  shadow">{{student.name}}</h5>
+                        <p class="card-text ">{{student.department}}</p>
+                    </div>
+                    <ul class="list-group  bg-info  list-group-flush">
+                        <li class=" bg-info  list-group-item">{{student.stage}}</li>
+                        <li class=" bg-info  list-group-item">{{student.birthday.day}}-{{student.birthday.month}}-{{student.birthday.year}} [{{2018-student.birthday.year}} years]</li>
+                    </ul>
+                    <div class="mx-auto card-body">
+                        <button class="btn btn-light text-info" @click="showTable(student)">View Scores</button>
+                        <button class="btn btn-light text-info" @click="openEditModal(student)">Edit</button>
+
+                    </div>
+
+                </div>
+                <!----->
+                <div class="card ml-2 mt-2 bg-info text-white " v-if="showStage" v-for="student in stageSearch">
+                    <div class="img-container">
+                        <img class="card-img-top center-cropped" :src="student.image" alt="Card image cap">
+                        <button @click="removeStudent(student._id)" class="btn btn-link text-light">X</button>
+
+                    </div>
+                    <div class="card-body p-0 my-1 mx-auto" >
+
+                        <h5 class="card-title  shadow">{{student.name}}</h5>
+                        <p class="card-text ">{{student.department}}</p>
+                    </div>
+                    <ul class="list-group  bg-info  list-group-flush">
+                        <li class=" bg-info  list-group-item">{{student.stage}}</li>
+                        <li class=" bg-info  list-group-item">{{student.birthday.day}}-{{student.birthday.month}}-{{student.birthday.year}} [{{2018-student.birthday.year}} years]</li>
+                    </ul>
+                    <div class="mx-auto card-body">
+                        <button class="btn btn-light text-info" @click="showTable(student)">View Scores</button>
+                        <button class="btn btn-light text-info" @click="openEditModal(student)">Edit</button>
+
+                    </div>
+
+                </div>
+                <!----->
+            <div class="card ml-2 mt-2 bg-info text-white" v-if="showAll" v-for="student in students">
+                <div class="img-container">
+                <img class="card-img-top center-cropped" :src="student.image" alt="Card image cap">
+                    <button @click="removeStudent(student._id)" class="btn btn-link text-light">X</button>
+
+                </div>
+                <div class="card-body p-0 my-1 mx-auto" >
+
+                <h5 class="card-title  shadow">{{student.name}}</h5>
+                    <p class="card-text ">{{student.department}}</p>
+                </div>
+                    <ul class="list-group  bg-info  list-group-flush">
+                        <li class=" bg-info  list-group-item">{{student.stage}}</li>
+                        <li class=" bg-info  list-group-item">{{student.birthday.day}}-{{student.birthday.month}}-{{student.birthday.year}} [{{2018-student.birthday.year}} years]</li>
+                    </ul>
+                    <div class="mx-auto card-body">
+                    <button class="btn btn-light text-info" @click="showTable(student)">View Scores</button>
+                        <button class="btn btn-light text-info" @click="openEditModal(student)">Edit</button>
+
+                    </div>
+
+            </div>
+            <!-------->
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!--footer-->
+<footer class="footer">
+    <div class="container">
+        <span class=" text-dark">Classrooms © Fatima Firas</span>
+    </div>
+</footer>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+    function getStudents() {
+        axios.get('/api/students').then(function (response) {
+            app.students = response.data;
+        });
+    }
+    var app = new Vue({
+        el:'#root ',
+        data:{
+            showAll:true,
+            showSearch:true,
+            showStage:true,
+            stageSearch:[],
+            students:[],
+            searchInput:"",
+            searchArray:[],
+            addingStudent:{
+                name : "",
+                stage: "",
+                birthday:{day:"",month:"",year:""},
+                image:"",
+                department:""
+            },
+            editingStudent: {
+                name : "",
+                stage: "",
+                birthday:{day:"",month:"",year:""},
+                image:"",
+                department:""
+            },
+            tableStudent:{},
+            editInput:false
+        },
+        methods:{
+            openEditModal: function (student) {
+                this.editingStudent = student
+                $('#editModal').modal('show')
+
+            },
+            openAddModal: function (student) {
+                $('#addModal').modal('show')
+
+            },
+
+            editStudent:function () {
+                axios.put('/api/students', {edit: this.editingStudent}).then(function (response) {
+                    if (response.data.isSuccess) {
+                        getStudents();
+                        $('#editModal').modal('hide');
+                    }
+                })
+            },
+            removeStudent: function (id) {
+                if (confirm("This action can't be undo")){
+                    axios.delete('/api/students', {params: {id: id}}).then(function (response) {
+                        if (response.data.isSuccess) {
+                            getStudents()
+                        }
+                    })
+            }
+            },
+            addStudent:function () {
+                addd = app.addingStudent
+                if (addd.name == "" || addd.stage == "" || addd.department == "" || addd.image == "") {
+                    alert("You missed important fields")
+                } else {
+
+                    axios.post('/api/students', {student: this.addingStudent}).then(function (response) {
+
+                        if (response.data.isSuccess) {
+                            getStudents()
+                            $('#addModal').modal('hide')
+                        }
+
+                    }).catch(function (error) {
+                        console.log("Error")
+
+                    })
+            }
+
+            },
+            searchStudent: function(array) {
+                search=[]
+                    for (var i = 0; i < array.length; i++) {
+                        if (array[i].name === app.searchInput) {
+                           search.push(array[i]);
+                        }
+                    }
+                app.searchArray=search;
+                app.showAll=false;
+                app.showSearch=true;
+                app.showStage=false;
+    },
+            searchStage: function (stage) {
+                array=app.students;
+                search=[]
+                for (var i = 0; i < array.length; i++){
+                    if (array[i].stage==stage){
+                        search.push(array[i])
+                    }
+
+                }
+                app.stageSearch=search;
+                app.showAll=false;
+                app.showSearch=false;
+                app.showStage=true;
+
+            },
+            showAllFun:function () {
+                app.showSearch=false
+                app.showStage=false
+                app.showAll=true
+            },
+            showTable:function (student) {
+
+                $('#tableModal').modal('show')
+                app.tableStudent=student
+            },
+            showInput:function () {
+                app.editInput=true
+            },
+
+            editScores:function () {
+                axios.put('/api/students', {edit: this.tableStudent}).then(function (response) {
+                    if (response.data.isSuccess) {
+                        getStudents();
+                        app.editInput=false
+
+                    }
+                })
+            }
+        },
+        mounted:function () {
+        axios.get('/api/students').then(function (response) {
+            app.students=response.data;
+        })
+    }
+    })
+
+
+</script>
+</body>
+</html>

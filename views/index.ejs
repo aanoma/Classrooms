@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <title>ClassRooms!</title>
+  <style>
+    nav{
+      background-color: transparent;
+    }
+body{
+
+    font: message-box;
+  background-image: url("http://www.wallpapermaiden.com/image/2017/02/17/anime-classroom-sunlight-chairs-scenic-anime-13429.jpg");
+
+}
+    footer{
+    background-color: rgba(0,128,128,0.1);
+
+    }
+
+  </style>
+</head>
+<body class="h-100 bg-light">
+<!--navbar-->
+<nav class="navbar navbar-expand-lg navbar-light w-100">
+  <a class="navbar-brand text-light display-2" href="/">ClassRooms!</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+    </ul>
+    <div class="form-inline my-2 my-lg-0">
+      <button class="btn btn-info my-2 my-sm-0" data-toggle="modal" data-target="#exampleModalCenter">about us</button>
+    </div>
+  </div>
+</nav>
+<!-------------->
+
+<div class="container h-100" id="root">
+  <div class="row h-100 justify-content-center align-items-center">
+    <div class="col-6  justify-content-center align-items-center">
+
+      <!--sign up and log in buttons-->
+
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active text-info" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Login</a>
+          <a class="nav-item nav-link text-info" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Sign up</a>
+        </div>
+
+      <!--------------->
+      <!--login -->
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">  <div class="w-100 card justify-content-center align-items-center">
+            <div class="w-100 card-body justify-content-center align-items-center">
+
+                <div class="form-group w-100 justify-content-center align-items-center">
+                  <input @keyup.enter="login" type="email" v-model="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group justify-content-center align-items-center">
+                  <input @keyup.enter="login" type="password" v-model="pass" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button class="btn btn-info float-right" @click="login">Login</button>
+
+            </div>
+          </div>
+        </div>
+        <!---------------------------->
+        <!--Sign up-->
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">  <div class="w-100 card justify-content-center align-items-center">
+            <div class="w-100 card-body justify-content-center align-items-center">
+
+                <div class="form-group w-100 justify-content-center align-items-center">
+                  <input type="text" v-model="account.username" class="form-control" placeholder="Username">
+                </div>
+                <div class="form-group w-100 justify-content-center align-items-center">
+                  <input type="email" v-model="account.email" class="form-control" aria-describedby="emailHelp" placeholder="Email">
+                </div>
+                <div class="form-group justify-content-center align-items-center">
+                  <input type="password" v-model="account.password" class="form-control" placeholder="Password">
+                </div>
+                <button class="btn btn-info float-right" @click="addAccount">Sign up</button>
+
+            </div>
+          </div></div>
+      </div>
+      <!-------------------------------->
+
+           <p class="bg-info text-light text-right">are you astudent? <a class="text-dark" href="/student"> click here</a></p>
+
+        <!-- Modal -->
+
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">About Us</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <p class="text-center">   This is a simple website that helps teachers and students
+                        Classrooms © Fatima Firas</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---->
+
+    </div>
+  </div>
+</div>
+
+<!--footer-->
+<footer class="navbar navbar-light">
+  <div class="container">
+    <p class="float-right">
+    <p class="text-dark">Classrooms © Fatima Firas</p>
+    </p>
+  </div>
+</footer>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+  var app = new Vue({
+      el:'#root',
+      data:{
+          success:false,
+          account:{
+              username:"",
+              password:"",
+              email:""
+          },
+          users:[],
+          email:"",
+          pass:""
+      },
+      methods:{
+          addAccount:function () {
+              if(this.account.username!==""&&this.account.password!==""&&this.account.email!==""){
+                      axios.get('/my-students', {
+                      params: {
+                          email: true
+                      }
+                  })
+                      .then(function (response) {
+
+                          console.log(response);
+                          window.location.href = response.request.responseURL;
+
+                      })
+                      .catch(function (error) {
+                          console.log(error);
+                      });
+                  axios.post('/api', {account: app.account}).then(function (response) {
+
+                  })
+              } else {
+                  alert("Please full the form")
+              }
+
+
+
+              },
+          login:function () {
+              if(app.email=="" || app.pass==""){
+                  alert("Please full the inputs")
+              }
+              for (i=0;i<this.users.length;i++){
+                  var email = this.users[i].email;
+                  var pass = this.users[i].password;
+                  if (app.email==email && app.pass==pass){
+                      app.success=true
+                      axios.get('/my-students', {
+                          params: {
+                              email: "true"
+                          }
+                      })
+                          .then(function (response) {
+
+                              console.log(response);
+                              window.location.href = response.request.responseURL;
+
+                          })
+                          .catch(function (error) {
+                              console.log(error);
+                          });
+                  }
+              }
+              if (!app.success){
+                  alert("Wrong password or email")
+              }
+
+
+          }
+      },
+      mounted:function () {
+          axios.get('/api').then(function (response) {
+          app.users=response.data;
+      })
+      }
+  })
+</script>
+</body>
+</html>
